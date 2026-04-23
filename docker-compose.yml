@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: nosql_mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: userprofiles
+
+  api:
+    build: ./api
+    container_name: nosql_api
+    ports:
+      - "8000:8000"
+    environment:
+      MONGO_URI: mongodb://mongodb:27017
+      MONGO_DB: userprofiles
+    depends_on:
+      - mongodb
+    volumes:
+      - ./api:/app
+
+  frontend:
+    image: nginx:alpine
+    container_name: nosql_frontend
+    ports:
+      - "3000:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html
+
+volumes:
+  mongo_data:

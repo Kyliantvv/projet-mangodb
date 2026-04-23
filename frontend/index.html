@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestion des Profils Utilisateurs</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Gestion des Profils Utilisateurs</h1>
+    <p>Base de données : <strong>MongoDB</strong></p>
+  </header>
+
+  <main>
+    <div class="toolbar">
+      <button id="btn-add" onclick="openModal()">+ Ajouter un utilisateur</button>
+      <button id="btn-advanced" onclick="loadAdvanced()">Requête avancée</button>
+      <button id="btn-all" onclick="loadUsers()">Tous les utilisateurs</button>
+    </div>
+
+    <div id="advanced-banner" class="hidden">
+      <span>Résultat : utilisateurs avec <strong>notifications activées</strong> ET <strong>plusieurs adresses</strong></span>
+    </div>
+
+    <div class="table-wrapper">
+      <table id="users-table">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Adresses</th>
+            <th>Thème</th>
+            <th>Notifications</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="users-body">
+          <tr><td colspan="6" class="loading">Chargement…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Modal ajout / édition -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <h2 id="modal-title">Ajouter un utilisateur</h2>
+
+      <label>Nom</label>
+      <input id="f-name" type="text" placeholder="Alice Dupont" />
+
+      <label>Email</label>
+      <input id="f-email" type="email" placeholder="alice@example.com" />
+
+      <label>Adresses (une par ligne : rue, ville, pays)</label>
+      <textarea id="f-addresses" rows="4"
+        placeholder="12 rue de la Paix, Paris, France&#10;5 Baker Street, Londres, Royaume-Uni"></textarea>
+
+      <label>Thème</label>
+      <select id="f-theme">
+        <option value="light">Clair</option>
+        <option value="dark">Sombre</option>
+      </select>
+
+      <label class="checkbox-label">
+        <input id="f-notifications" type="checkbox" checked />
+        Notifications activées
+      </label>
+
+      <div class="modal-actions">
+        <button onclick="saveUser()">Enregistrer</button>
+        <button class="secondary" onclick="closeModal()">Annuler</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="overlay" class="hidden" onclick="closeModal()"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
